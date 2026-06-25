@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Operations Center</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Consolas,monospace;
+}
+
+body{
+    background:#050505;
+    color:#00ff88;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    border:1px solid #00ff88;
+    padding:30px;
+    box-shadow:0 0 20px rgba(0,255,136,.2);
+}
+
+h1{
+    font-size:2rem;
+    margin-bottom:15px;
+}
+
+.line{
+    width:100%;
+    height:1px;
+    background:#00ff88;
+    margin:20px 0;
+}
+
+.log{
+    color:#aaa;
+    line-height:1.8;
+}
+
+.status{
+    color:#00ff88;
+}
+
+.warning{
+    color:#ff5555;
+}
+
+.logo{
+    width:60px;
+    height:60px;
+    vertical-align:middle;
+    margin-right:10px;
+
+    filter:
+        drop-shadow(0 0 8px #ff0000)
+        drop-shadow(0 0 15px #ff0000)
+        drop-shadow(0 0 30px #ff0000);
+
+    animation:pulseRed 1.5s infinite;
+}
+
+@keyframes pulseRed{
+    0%,100%{
+        filter:
+            drop-shadow(0 0 8px #ff0000)
+            drop-shadow(0 0 15px #ff0000)
+            drop-shadow(0 0 30px #ff0000);
+    }
+
+    50%{
+        filter:
+            drop-shadow(0 0 15px #ff0000)
+            drop-shadow(0 0 30px #ff0000)
+            drop-shadow(0 0 50px #ff0000);
+    }
+}
+
+#terminal{
+    display:block;
+
+    margin-top:25px;
+
+    border:1px solid #00ff88;
+    background:#000;
+    padding:15px;
+    height:250px;
+    overflow-y:auto;
+
+    color:#00ff88;
+    font-family:Consolas,monospace;
+
+    box-shadow:0 0 10px rgba(0,255,136,.3);
+}
+
+#output p{
+    margin:4px 0;
+}
+
+#inputLine{
+    display:flex;
+    align-items:center;
+}
+
+#commandInput{
+    flex:1;
+    background:transparent;
+    border:none;
+    color:#00ff88;
+    outline:none;
+    font-family:Consolas,monospace;
+    font-size:16px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>
+        <img src="images.png" class="logo">
+        SYSTEM ALERT
+    </h1>
+
+    <div class="line"></div>
+
+    <div class="log">
+        <p>[INFO] Contains anti-government elements.</p>
+        <p>[INFO] Giving a dangerous important documents to public.</p>
+        <p>[INFO] Contains negative elements for the country.</p>
+        <p class="warning">[STATUS] Website is taken down.</p>
+        <p class="warning">[REASON] Violation of content policies.</p>
+        <p class="warning">[ACTIVITY] Any important documents and confidential matters have been seized..</p>
+    </div>
+
+    <div class="line"></div>
+
+    <p>A volunteer hacker has taken down the website.</p>
+</div>
+
+<div class="green-box">
+
+    <!-- Isi kotak hijau -->
+
+</div>
+
+<div id="terminal">
+    <h1>Command Prompt</h1>
+    <div id="output">
+        <p>> System initialized...</p>
+        <p>> Awaiting command...</p>
+        <p>> Use help for assistance</p>
+    </div>
+
+    <div id="inputLine">
+        <span>-> </span>
+        <input type="text" id="commandInput" autocomplete="off">
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById("commandInput");
+const output = document.getElementById("output");
+
+input.addEventListener("keydown", function(e){
+
+    if(e.key === "Enter"){
+
+        const cmd = input.value.trim().toLowerCase();
+
+        output.innerHTML += `<p>> ${cmd}</p>`;
+
+        if(cmd === "help"){
+            output.innerHTML +=
+            `<p>Available commands:
+            help,
+            status,
+            clear,
+            cls,
+            whoarewe</p>`;
+        }
+
+        else if(cmd === "status"){
+            output.innerHTML +=
+            `<p>SYSTEM STATUS: ACTIVE</p>`;
+        }
+
+        else if(cmd === "whoarewe"){
+            output.innerHTML +=
+            `<p>UNKNOWN USER</p>`;
+        }
+
+        else if(cmd === "clear"){
+            output.innerHTML = "";
+        }
+
+        else if(cmd === "cls"){
+            output.innerHTML = "";
+        }
+
+        else{
+            output.innerHTML +=
+            `<p>Command not recognized.</p>`;
+        }
+
+        input.value = "";
+        document.getElementById("terminal").scrollTop =
+        document.getElementById("terminal").scrollHeight;
+    }
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takashi Blog</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    display:flex;
+    min-height:100vh;
+}
+
+/* Sidebar */
+
+.sidebar{
+    width:260px;
+    background:#ffffff;
+    padding:30px;
+    box-shadow:0 0 25px rgba(0,0,0,.08);
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#222;
+    margin-bottom:40px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#555;
+    padding:12px 16px;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.menu a:hover{
+    background:#4f46e5;
+    color:white;
+}
+
+/* Content */
+
+.content{
+    margin-left:260px;
+    width:100%;
+    padding:40px;
+}
+
+.title{
+    font-size:35px;
+    color:#222;
+    margin-bottom:30px;
+}
+
+.blog-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card-content h2{
+    color:#222;
+    margin-bottom:10px;
+}
+
+.card-content p{
+    color:#666;
+    line-height:1.6;
+}
+
+.read-btn{
+    margin-top:15px;
+    display:inline-block;
+    text-decoration:none;
+    background:#4f46e5;
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.read-btn:hover{
+    opacity:.8;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    body{
+        flex-direction:column;
+    }
+
+    .content{
+        margin-left:0;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        Takashi Blog
+    </div>
+
+    <div class="menu">
+        <a href="https://imanterbangs02.wixsite.com/takashi-makoto">Official Website</a>
+        <a href="https://github.com/imanterbangs">Github Profile</a>
+    </div>
+
+</div>
+
+<div class="content">
+
+    <h1 class="title">
+        Post Terbaru
+    </h1>
+
+    <div class="blog-list">
+
+        <div class="card">
+            <img src="loveletter.png">
+
+            <div class="card-content">
+                <h2>LoveLetter</h2>
+
+                <p>
+                    Surat cinta yang ditulis oleh seorang pemuda untuk gadis pujaannya,
+                    penuh dengan perasaan tulus dan harapan untuk masa depan yang cerah.
+                    Walau mereka adalah dua agama yang berbeza, mereka tetap berusaha untuk menjaga hubungan mereka dengan penuh kasih sayang dan pengertian.
+                    Tapi surat ini dimulakan dengan tampilan yang menyeramkan.
+                </p>
+
+                <a href="https://imanterbangs.github.io/LoveLetter/" class="read-btn">
+                    Review Tampilan
+                </a>
+                <a href="https://github.com/imanterbangs/Love-Letter" class="read-btn">
+                    Dapatkan Letter
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="akakjthechaser.png">
+
+            <div class="card-content">
+                <h2>Akak J The Chaser</h2>
+
+                <p>
+                    Pemainan kejar mengejar antara mat rempit dengan anggota JPJ, di mana mat rempit cuba untuk melarikan diri daripada JPJ yang mengejar mereka. Pemain akan mengawal mat rempit dan berusaha untuk mengelak daripada ditangkap oleh JPJ sambil mengumpul mata dan bonus sepanjang perjalanan.
+                </p>
+
+                <a href="https://imanterbangs.github.io/ElakJPJ/" class="read-btn">
+                    Mainkan game
+                </a>
+                <a href="https://github.com/imanterbangs/AkakJTheChaser" class="read-btn">
+                    Dapatkan Code
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="takashistore.png">
+
+            <div class="card-content">
+                <h2>Takashi Music Store</h2>
+
+                <p>
+                    Kedai menjual lagu-lagu yang dicipta oleh Takashi Makoto, tetapi menjadi misteri apabila tampilannya berubah menjadi Emergency Brodcast System berserta dengan suara brodcaster yang bunyi seperti robot.
+                </p>
+
+                <a href="https://imanterbangs.github.io/TakashiMusicStore/" class="read-btn">
+                    Review Tampilan
+                </a>
+                <a href="https://github.com/imanterbangs/Takashi-Music-Store" class="read-btn">
+                    Daptkan Code
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="takendown.png">
+
+            <div class="card-content">
+                <h2>Web Taken Down</h2>
+
+                <p>
+                    Tampilan web yang menunjukkan bahawa ia telah digodam dan diambil alih oleh pihak yang tidak bertanggungjawab. dan claim bahawa dirinya telah mengambil tugas cybersecurity untuk menghapuskan web tersebut.
+                </p>
+
+                <a href="https://imanterbangs.github.io/WebTakenDown/" class="read-btn">
+                    Review Tampilan
+                </a>
+                <a href="https://github.com/imanterbangs/web-taken-down" class="read-btn">
+                    Daptkan Code
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!-- Copyright (c) 2026 Takashi Makoto. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akak J The Chaser</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{overflow:hidden;background:#000;color:#fff;font-family:Arial,sans-serif}
+#menu,#winScreen,#gameOver{
+position:fixed;inset:0;display:flex;flex-direction:column;
+justify-content:center;align-items:center;background:#000;z-index:999999;
+}
+h1{letter-spacing:3px;margin-bottom:20px}
+.playBtn{
+padding:15px 40px;border:2px solid #666;background:#111;color:#fff;
+font-size:22px;cursor:pointer;border-radius:10px;
+box-shadow:0 0 20px rgba(255,255,255,.15);
+transition:.3s;
+}
+.playBtn:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(255,255,255,.4)}
+#game{width:100vw;height:100vh;position:relative;display:none}
+#info,#scoreBoard{
+position:absolute;z-index:100;left:20px;color:#fff;
+text-shadow:0 0 10px #000;
+}
+#info{top:20px}
+#scoreBoard{top:130px}
+#playerContainer,#ghostContainer,#foodContainer{position:absolute}
+.nameTag{
+position:absolute;top:-25px;left:50%;transform:translateX(-50%);
+white-space:nowrap;font-size:14px;font-weight:bold;
+}
+.ghostName{color:red}
+#player{width:40px;height:40px;border-radius:50%;background:cyan;box-shadow:0 0 20px cyan}
+#ghost{width:60px;height:60px;border-radius:50%;overflow:hidden;box-shadow:0 0 25px red}
+#ghost img,#food img{width:100%;height:100%;object-fit:cover}
+#food{width:45px;height:45px;border-radius:50%;overflow:hidden;box-shadow:0 0 20px gold}
+#jumpscare{
+position:fixed;inset:0;display:none;justify-content:center;align-items:center;
+background:black;z-index:99999;
+}
+#jumpscare img{width:90vw;height:90vh;object-fit:contain;animation:shake .08s infinite}
+@keyframes shake{
+0%{transform:translate(5px,5px)}
+25%{transform:translate(-5px,-5px)}
+50%{transform:translate(5px,-5px)}
+75%{transform:translate(-5px,5px)}
+100%{transform:translate(5px,5px)}
+}
+</style>
+</head>
+<body>
+
+<div id="menu">
+<div class="nameTag ghostName">Akak J</div>
+<div id="ghost"><img src="jpj.png"></div>
+<br><br>
+<h1>AKAK J THE CHASER</h1>
+<h2>Elak Akak J dan kumpul makanan untuk menang!<br>
+Gunakan WASD untuk bergerak<br><br>
+Permainan dibuat oleh Takashi Makoto<br><a href="https://linktr.ee/TakashiMakoto" target="_blank">./TakashiMakoto</a></h2>
+<br>
+<button class="playBtn" id="playBtn">PLAY GAME</button>
+</div>
+
+<div id="game">
+<!--<div id="info">
+WASD untuk bergerak<br>
+Elak Akak J...<br><br>
+Jika terkena, anda diberikan ciuman kasih sayang oleh akak J<br>
+Sebelum diberikan surat cinta daripadanya
+</div>-->
+
+<div id="scoreBoard">
+<div>Survival Score: <span id="survivalScore">0</span></div>
+<div>Food Score: <span id="foodScore">0</span>/10</div>
+</div>
+
+<div id="playerContainer">
+<div class="nameTag">ANDA</div>
+<div id="player"></div>
+</div>
+
+<div id="ghostContainer">
+<div class="nameTag ghostName">Akak J</div>
+<div id="ghost"><img src="jpj.png"></div>
+</div>
+
+<div id="foodContainer">
+<div id="food"><img id="foodImg" src="food1.png"></div>
+</div>
+</div>
+
+<div id="jumpscare"><img src="jpj.png"></div>
+
+<div id="gameOver" style="display:none">
+<h1 style="color:red">PERMAINAN TAMAT</h1>
+<h2>Pffit- Anda diberikan surat cinta (SAMAN)<BR>
+dan tidak lupa juga diberikan ciuman kasih <br>
+sayang oleh akak J<br><br>Tekan F5 untuk memulakan semula</h2>
+</div>
+
+<div id="winScreen" style="display:none">
+<h1 style="color:lime">TAHNIAH!</h1>
+<h2>Anda berjaya mengumpul semua makanan!<br>
+padu do kau, siapa do kau sebenarnya,<br>
+mesti pernah kena ciuman dgn akak J sebelum ni kan? HAHAHAHAH<br><br>
+Tekan F5 untuk memulakan semula</h2>
+</div>
+
+<audio id="music" src="music.mp3" loop></audio>
+<audio id="congratsSound" src="yey.mp3"></audio>
+<audio id="jumpscareSound" src="jumpscare.mp3"></audio>
+
+<script>
+const game=document.getElementById("game");
+const menu=document.getElementById("menu");
+const playBtn=document.getElementById("playBtn");
+const music=document.getElementById("music");
+const congratsSound=document.getElementById("congratsSound");
+const jumpscare=document.getElementById("jumpscare");
+const jumpscareSound=document.getElementById("jumpscareSound");
+const gameOver=document.getElementById("gameOver");
+const winScreen=document.getElementById("winScreen");
+
+const playerContainer=document.getElementById("playerContainer");
+const ghostContainer=document.getElementById("ghostContainer");
+const foodContainer=document.getElementById("foodContainer");
+const foodImg=document.getElementById("foodImg");
+
+const survivalText=document.getElementById("survivalScore");
+const foodText=document.getElementById("foodScore");
+
+let px=200,py=200,gx=700,gy=300,fx=400,fy=300;
+let speed=5,ghostSpeed=2;
+let keys={},dead=false,started=false;
+let survival=0,foods=0;
+let lastTime=Date.now();
+
+const foodImages=[
+"food1.png","food2.png","food3.png","food4.png","food5.png",
+"food6.png","food7.png","food8.png","food9.png","food10.png"
+];
+
+playBtn.onclick=()=>{
+menu.style.display="none";
+game.style.display="block";
+music.play().catch(()=>{});
+started=true;
+spawnFood();
+loop();
+};
+
+document.addEventListener("keydown",e=>keys[e.key.toLowerCase()]=true);
+document.addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
+
+function spawnFood(){
+if(foods>=10)return;
+fx=Math.random()*(window.innerWidth-100)+50;
+fy=Math.random()*(window.innerHeight-100)+50;
+foodContainer.style.left=fx+"px";
+foodContainer.style.top=fy+"px";
+foodImg.src=foodImages[Math.floor(Math.random()*foodImages.length)];
+foodContainer.style.display="block";
+}
+
+function updatePlayer(){
+if(keys.w)py-=speed;
+if(keys.s)py+=speed;
+if(keys.a)px-=speed;
+if(keys.d)px+=speed;
+
+px=Math.max(0,Math.min(window.innerWidth-40,px));
+py=Math.max(0,Math.min(window.innerHeight-40,py));
+
+playerContainer.style.left=px+"px";
+playerContainer.style.top=py+"px";
+
+let fdx=px-fx,fdy=py-fy;
+if(Math.sqrt(fdx*fdx+fdy*fdy)<40 && foodContainer.style.display!="none"){
+foods++;
+foodText.textContent=foods;
+foodContainer.style.display="none";
+
+if(foods>=10){
+dead=true;
+music.pause();
+congratsSound.play();
+winScreen.style.display="flex";
+return;
+}
+
+setTimeout(spawnFood,2500);
+}
+}
+
+function updateGhost(){
+let dx=px-gx,dy=py-gy;
+let dist=Math.sqrt(dx*dx+dy*dy);
+
+if(dist>0){
+gx+=dx/dist*ghostSpeed;
+gy+=dy/dist*ghostSpeed;
+}
+
+ghostContainer.style.left=gx+"px";
+ghostContainer.style.top=gy+"px";
+
+if(dist<40&&!dead)triggerJumpscare();
+}
+
+function triggerJumpscare(){
+dead=true;
+music.pause();
+jumpscare.style.display="flex";
+jumpscareSound.currentTime=0;
+jumpscareSound.play();
+
+setTimeout(()=>{
+jumpscare.style.display="none";
+gameOver.style.display="flex";
+},3000);
+}
+
+function loop(){
+if(dead)return;
+
+updatePlayer();
+updateGhost();
+
+let now=Date.now();
+survival=Math.floor((now-lastTime)/1000);
+survivalText.textContent=survival;
+
+requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>

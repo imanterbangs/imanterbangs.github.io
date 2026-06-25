@@ -1,0 +1,461 @@
+<!-- Copyright (c) 2026 Takashi Makoto. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takashi Music</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+overflow-x:hidden;
+}
+
+/* ================= SHOP ================= */
+
+#shop{
+min-height:100vh;
+}
+
+.hero{
+background:#111;
+color:white;
+padding:50px;
+text-align:center;
+}
+
+.hero h1{
+font-size:50px;
+}
+
+.products{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:25px;
+padding:40px;
+}
+
+.product{
+background:white;
+width:280px;
+padding:15px;
+border-radius:12px;
+box-shadow:0 0 15px rgba(0,0,0,.2);
+transition:.3s;
+}
+
+.product:hover{
+transform:translateY(-8px);
+}
+
+.product img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.product h2{
+margin-top:10px;
+}
+
+.product span{
+display:block;
+margin-top:8px;
+font-weight:bold;
+}
+
+.review{
+background:white;
+padding:15px;
+margin:10px auto;
+max-width:700px;
+border-radius:8px;
+}
+
+/* ================= EBS ================= */
+
+#ebs{
+display:none;
+position:fixed;
+inset:0;
+background:#000;
+color:#fff;
+overflow:hidden;
+z-index:999;
+font-family:Consolas,monospace;
+}
+
+#noise,
+#scan{
+position:fixed;
+inset:0;
+pointer-events:none;
+}
+
+#noise{
+opacity:.08;
+background:
+repeating-radial-gradient(
+white,
+black 2px
+);
+animation:noise .15s infinite;
+}
+
+#scan{
+background:
+repeating-linear-gradient(
+transparent 0,
+rgba(255,255,255,.03) 2px,
+transparent 4px
+);
+}
+
+@keyframes noise{
+50%{
+transform:translate(4px,-3px);
+}
+}
+
+.center{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+
+.center img{
+width:500px;
+max-width:90%;
+display:block;
+margin:auto;
+margin-bottom:20px;
+}
+
+.glitch{
+font-size:60px;
+color:red;
+text-shadow:0 0 15px red;
+animation:glitch .12s infinite;
+}
+
+@keyframes glitch{
+25%{
+transform:translate(2px,-2px);
+}
+50%{
+transform:translate(-2px,2px);
+}
+75%{
+transform:translate(2px,2px);
+}
+}
+
+#msg{
+margin-top:20px;
+font-size:22px;
+}
+
+#count{
+position:fixed;
+top:20px;
+right:20px;
+font-size:40px;
+color:red;
+}
+
+#camera{
+position:fixed;
+top:20px;
+left:20px;
+border:1px solid #555;
+padding:10px;
+font-size:12px;
+}
+
+#camera2{
+position:fixed;
+top:80px;
+left:20px;
+border:1px solid #555;
+padding:10px;
+font-size:12px;
+}
+
+#terminal{
+position:fixed;
+bottom:10px;
+left:10px;
+width:420px;
+height:180px;
+border:1px solid rgb(255, 0, 0);
+color:rgb(255, 0, 0);
+padding:10px;
+background:rgba(0,0,0,.7);
+overflow:auto;
+font-size:13px;
+}
+
+.shadow{
+position:fixed;
+left:-300px;
+top:0;
+width:300px;
+height:100vh;
+background:rgba(0,0,0,.9);
+animation:shadowmove 12s infinite;
+}
+
+@keyframes shadowmove{
+0%{left:-300px;}
+15%{left:120%;}
+100%{left:120%;}
+}
+
+.flash{
+position:fixed;
+inset:0;
+background:red;
+opacity:0;
+pointer-events:none;
+}
+
+#jumpscare{
+display:none;
+position:fixed;
+inset:0;
+background:#000;
+justify-content:center;
+align-items:center;
+font-size:70px;
+color:red;
+z-index:99999;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ================= SHOP ================= -->
+
+<div id="shop">
+
+<header class="hero">
+<h1>TAKASHI MUSIC</h1>
+<p>
+Stay here for 2 minutes to unlock special discount.<BR>
+Click the product to review and get discount if you are one of the lucky winner!
+</p>
+</header>
+
+<div class="products">
+
+<div class="product">
+<img src="album1.jpg"> <!-- foto sendiri -->
+<h2>BAYANG PHONK</h2> <!-- nama album sendiri -->
+<span>RM19.90</span>
+</div>
+
+<div class="product">
+<img src="album2.jpg"> <!-- foto sendiri -->
+<h2>Drifting Through Harajuku</h2> <!-- nama album sendiri -->
+<span>RM24.90</span>
+</div>
+
+<div class="product">
+<img src="album3.jpg"><!-- foto sendiri -->
+<h2>Late Night Watching Elfie's Stream</h2> <!-- nama album sendiri -->
+<span>RM14.90</span>
+</div>
+
+</div>
+
+<div class="review">★★★★★ Amazing soundtrack.</div>
+<div class="review">★★★★★ Best quality music.</div>
+<div class="review">★★★★★ Fast digital delivery.</div>
+
+</div>
+
+<!-- ================= EBS ================= -->
+
+<div id="ebs">
+
+<div id="noise"></div>
+<div id="scan"></div>
+
+<div class="shadow"></div>
+
+<div id="camera">
+EMERGENCY BROADCAST SYSTEM<br>
+PROJECT ECHO
+</div>
+
+<div id="camera2">
+RELOAD PAGE AND CLICK MOUSE<BR>
+ON EVERYWHERE TO START THE EMERGENCY<BR>
+BRODCAST SYSTEM AUDIO
+</div>
+
+<div class="center">
+
+<img src="kerajaanjatuh.png">
+
+<h1 class="glitch">
+PROJECT ECHO FAILED
+</h1>
+
+<div id="msg">
+They are watching...
+</div>
+
+</div>
+
+<div id="terminal"></div>
+
+<div class="flash" id="flash"></div>
+
+<div id="jumpscare">
+YOU'RE NOT ALONE
+</div>
+
+</div>
+
+<audio id="alertAudio" loop>
+    <source src="emergency.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const audio = document.getElementById("alertAudio");
+
+/* ================= EBS START ================= */
+
+setTimeout(()=>{
+
+document.getElementById("shop").style.display="none";
+document.getElementById("ebs").style.display="block";
+audio.play().catch(()=>{});
+
+startEBS();
+
+},10000);
+
+/* untuk testing cepat */
+/* tukar 120000 ke 10000 untuk 10 saat */
+
+/* ================= FUNCTIONS ================= */
+
+function startEBS(){
+
+const terminal =
+document.getElementById("terminal");
+
+const msg =
+document.getElementById("msg");
+
+const lines=[
+
+"connecting...",
+"broadcast recovered",
+"motion detected",
+"15 unknown entities found",
+"containment breach",
+"PROJECT ECHO FAILED",
+"government communication lost",
+"WARNING",
+"WARNING",
+"WARNING"
+
+];
+
+let index=0;
+
+setInterval(()=>{
+
+terminal.innerHTML +=
+lines[index % lines.length] + "<br>";
+
+terminal.scrollTop =
+terminal.scrollHeight;
+
+index++;
+
+},1800);
+
+const msgs=[
+
+"They are watching.",
+"Do not leave your shelter.",
+"Unknown movement detected.",
+"Run.",
+"Too late."
+
+];
+
+setInterval(()=>{
+
+msg.textContent =
+msgs[Math.floor(
+Math.random()*msgs.length
+)];
+
+},3000);
+
+const flash =
+document.getElementById("flash");
+
+setInterval(()=>{
+
+flash.style.opacity=.25;
+
+setTimeout(()=>{
+
+flash.style.opacity=0;
+
+},120);
+
+},2500);
+
+let c=1000;
+
+const counter=setInterval(()=>{
+
+c--;
+
+document.getElementById("count")
+.textContent=c;
+
+if(c<=0){
+
+clearInterval(counter);
+
+document.getElementById(
+"jumpscare"
+).style.display="flex";
+
+}
+
+},1000);
+
+}
+
+/* ================= AUDIO ================= */
+
+
+
+</script>
+
+</body>
+</html>
